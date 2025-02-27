@@ -1,0 +1,36 @@
+# macOS system files
+.DS_Store
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Environment variables
+.env
+
+# Virtual environment
+venv/
+env/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+
+# Logs
+*.log
+
+# IDE settings (if applicable)
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Byte-compiled / optimized / DLL files
+*.pyo
+*.pyd
+.Python
+
+# SQLite database files
+*.sqlite3
+*.db
+

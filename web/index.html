@@ -74,6 +74,45 @@
         });
       })
       .catch(err => console.error('Error fetching well data:', err));
+
+      // Create an overlay to serve as a popup when a marker is clicked
+      const popup = new ol.Overlay({
+        element: document.createElement('div'),
+        positioning: 'bottom-center',
+        stopEvent: false,
+        offset: [0, -10]
+      });
+      map.addOverlay(popup);
+
+      // Listen for click events on the map
+      map.on('click', function (event) {
+        // Check if a feature (marker) was clicked
+        const feature = map.forEachFeatureAtPixel(event.pixel, function (feature) {
+          return feature;
+        });
+      
+        if (feature) {
+          // Retrieve well data from the clicked marker
+          const wellData = feature.get('data'); 
+          const element = popup.getElement();
+          element.innerHTML = `
+            <div style="background: white; padding: 8px; border-radius: 5px; box-shadow: 0px 0px 10px rgba(0,0,0,0.3);">
+              <strong>${wellData.well_name}</strong><br>
+              <b>Operator:</b> ${wellData.operator}<br>
+              <b>API Number:</b> ${wellData.api_number}<br>
+              <b>County/State:</b> ${wellData.county_state}<br>
+              <b>Latitude:</b> ${wellData.latitude}<br>
+              <b>Longitude:</b> ${wellData.longitude}<br>
+              <b>Stimulation Date:</b> ${wellData.date_stimulated || 'N/A'}<br>
+              <b>Formation:</b> ${wellData.stimulated_formation || 'N/A'}
+            </div>
+          `;
+          popup.setPosition(feature.getGeometry().getCoordinates());
+        } else {
+          // Hide the popup if clicking elsewhere on the map
+          popup.setPosition(undefined); 
+        }
+      });
   </script>
 </body>
 </html>

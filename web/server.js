@@ -35,9 +35,9 @@ app.get('/api/wells', (req, res) => {
   const query = `
     SELECT wi.id, wi.operator, wi.api_number, wi.well_name, wi.county_state, wi.well_shl,
            wi.latitude, wi.longitude, wsd.block_stats, sd.date_stimulated, sd.stimulated_formation
-    FROM well_info wi
-    LEFT JOIN well_scraped_data wsd ON wi.api_number = wsd.api_number
-    LEFT JOIN stimulation_data sd ON wi.id = sd.well_info_id
+    FROM well_info_cleaned wi
+    LEFT JOIN well_scraped_data_cleaned wsd ON wi.api_number = wsd.api_number
+    LEFT JOIN stimulation_data_cleaned sd ON wi.id = sd.id
     ORDER BY wi.id DESC
   `;
 
